@@ -1,60 +1,63 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-sm-10"
+      <div class="col-sm-10">
         <h1>Recipes</h1>
         <hr><br><br>
         <alert :message="message" v-if="showMessage"></alert>
-        <button type="button" class="btn btn-success btn-sm" v-b-modal.recipe-modal>Add Recipe</button>
+        <button type="button" class="btn btn-success btn-sm" v-b-modal.recipe-modal>
+          Add recipe
+        </button>
         <br><br>
-      </div>  
+      </div>
     </div>
     <b-modal ref="addRecipeModal"
-            id="recipe-modal"
-            title="Add a new recipe"
-            hide-footer>
+             id="recipe-modal"
+             title="Add a new recipe"
+             hide-footer>
       <b-form @submit="onSubmit" @reset="onReset" class="w-100">
-        <b-form-group id="form-name-group"
+      <b-form-group id="form-name-group"
                     label="Name:"
                     label-for="form-name-input">
-            <b-form-input id="form-name-input"\
+          <b-form-input id="form-name-input"
                         type="text"
                         v-model="addRecipeForm.name"
                         required
-                        placeholder="Enter Name">
-            </b-form-input>
-        </b-form-group>
-        <b-form-group id="form-ingredients-group"
+                        placeholder="Enter name">
+          </b-form-input>
+      </b-form-group>
+      <b-form-group id="form-ingredients-group"
                     label="Ingredients:"
                     label-for="form-ingredients-input">
-            <b-form-input id="form-ingredients-input"\
+          <b-form-input id="form-ingredients-input"
                         type="text"
                         v-model="addRecipeForm.ingredients"
                         required
-                        placeholder="Enter Ingredients">
-            </b-form-input>
-        </b-form-group>
-        <b-form-group id="form-instructions-group"
+                        placeholder="Enter ingredients">
+          </b-form-input>
+      </b-form-group>
+      <b-form-group id="form-instructions-group"
                     label="Instructions:"
                     label-for="form-instructions-input">
-            <b-form-input id="form-instructions-input"\
+          <b-form-input id="form-instructions-input"
                         type="text"
                         v-model="addRecipeForm.instructions"
                         required
-                        placeholder="Enter Instructions">
-            </b-form-input>
-        </b-form-group>
-        <b-form-group id="form-minutes-group"
+                        placeholder="Enter instructions">
+          </b-form-input>
+      </b-form-group>
+      <b-form-group id="form-minutes-group"
                     label="Minutes:"
                     label-for="form-minutes-input">
-            <b-form-input id="form-minutes-input"\
+          <b-form-input id="form-minutes-input"
                         type="int"
                         v-model="addRecipeForm.minutes"
-                        placeholder="Enter Minutes">
-            </b-form-input>
-        </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+                        required
+                        placeholder="Enter minutes">
+          </b-form-input>
+      </b-form-group>
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-modal>
   </div>
@@ -100,7 +103,7 @@ export default {
           console.error(error);
         });
     },
-    addRecipe(recipeID) {
+    addRecipe(payload) {
       const path = 'http://localhost:5000/recipes/new';
       axios.post(path, payload)
         .then(() => {
@@ -141,7 +144,7 @@ export default {
       };
       this.addRecipe(payload);
       this.initForm();
-    }
+    },
   },
   created() {
     this.getRecipes();
