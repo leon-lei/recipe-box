@@ -42,8 +42,13 @@ recipe_schema = RecipeSchema(strict=True)
 recipes_schema = RecipeSchema(many=True, strict=True)
 
 
-@app.route('/', methods=['GET'])
-def homepage():
+@app.route('/', methods=['GET', 'POST'])
+def all_recipes():
+    response_object = {'status': 'success'}
+    if request.method == 'POST':
+        post_data = request.get_json()
+        
+
     all_recipes = Recipe.query.order_by(Recipe.name.asc())
     result = recipes_schema.dump(all_recipes)
     return jsonify(result.data)
