@@ -35,6 +35,6 @@ $: python manage.py shell
 
 Reference materials
 ---------------
-- [Michael Herman's tutorial on testdrive.io](https://testdriven.io/blog/developing-a-single-page-app-with-flask-and-vuejs/ "Michael Herman's Tutorial")
+- [Michael Herman's tutorial on testdriven.io](https://testdriven.io/blog/developing-a-single-page-app-with-flask-and-vuejs/ "Michael Herman's Tutorial")
 
 - [Adam McQuistan's tutorial on Stack Abuse](https://stackabuse.com/single-page-apps-with-vue-js-and-flask-restful-api-with-flask/ "Adam McQuistan's Tutorial")

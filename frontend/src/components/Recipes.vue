@@ -3,12 +3,21 @@
     <div class="row">
       <div class="col-sm-10">
         <h1>Recipes</h1>
-        <hr><br><br>
+        <hr>
         <alert :message="message" v-if="showMessage"></alert>
         <button type="button" class="btn btn-success btn-sm" v-b-modal.recipe-modal>
           Add recipe
         </button>
         <br><br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-10">
+        <div class="card" v-for="recipe in recipes" v-bind:key="recipe.id">
+          <div class="card-content">
+            <p class="name">{{ recipe.name }} - {{ recipe.minutes }}</p>
+          </div>
+        </div>
       </div>
     </div>
     <b-modal ref="addRecipeModal"
@@ -23,7 +32,7 @@
                         type="text"
                         v-model="addRecipeForm.name"
                         required
-                        placeholder="Enter name">
+                        placeholder="Simmered Kabocha">
           </b-form-input>
       </b-form-group>
       <b-form-group id="form-ingredients-group"
@@ -33,7 +42,7 @@
                         type="text"
                         v-model="addRecipeForm.ingredients"
                         required
-                        placeholder="Enter ingredients">
+                        placeholder="dashi, kabocha, mirin, soy sauce, sugar">
           </b-form-input>
       </b-form-group>
       <b-form-group id="form-instructions-group"
@@ -43,7 +52,7 @@
                         type="text"
                         v-model="addRecipeForm.instructions"
                         required
-                        placeholder="Enter instructions">
+                        placeholder="Mix and cover 1 inch kabocha pieces. Simmer 25 minutes.">
           </b-form-input>
       </b-form-group>
       <b-form-group id="form-minutes-group"
@@ -53,7 +62,7 @@
                         type="int"
                         v-model="addRecipeForm.minutes"
                         required
-                        placeholder="Enter minutes">
+                        placeholder="35">
           </b-form-input>
       </b-form-group>
       <b-button type="submit" variant="primary">Submit</b-button>
@@ -93,7 +102,7 @@ export default {
   },
   methods: {
     getRecipes() {
-      const path = 'http://localhost:5000';
+      const path = 'http://localhost:5000/api/recipes/';
       axios.get(path)
         .then((res) => {
           this.recipes = res.data.recipes;
@@ -104,7 +113,7 @@ export default {
         });
     },
     addRecipe(payload) {
-      const path = 'http://localhost:5000/recipes/new';
+      const path = 'http://localhost:5000/api/recipes/';
       axios.post(path, payload)
         .then(() => {
           this.getRecipes();
