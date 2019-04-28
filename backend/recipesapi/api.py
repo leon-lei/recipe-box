@@ -25,7 +25,7 @@ def recipes():
         return jsonify(recipe.to_dict()), 201
 
 
-@api.route('/recipes/<int:id>', methods=['GET', 'PUT'])
+@api.route('/recipes/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def recipe(id):
     if request.method == 'GET':
         recipe = Recipe.query.get_or_404(id)
@@ -40,5 +40,10 @@ def recipe(id):
         recipe.minutes = data['minutes']
         
         db.session.commit()
-        recipe = Recipe.query.get(data['id'])
+        recipe = Recipe.query.get(id)
         return jsonify(recipe.to_dict()), 201
+    elif request.method == 'DELETE':
+        recipe = Recipe.query.get_or_404(id)
+        db.session.delete(recipe)
+        db.session.commit()
+        return jsonify(recipe.to_dict()), 200

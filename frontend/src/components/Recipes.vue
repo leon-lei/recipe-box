@@ -26,7 +26,12 @@
                 @click="editRecipe(recipe)">
             Update
         </button>
-        <button type="button" class="btn btn-danger btn-sm">Delete</button>
+        <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                @click="onDeleteRecipe(recipe)">
+            Delete
+        </button>
       </div>
     </div>
     <!-- Add recipe modal -->
@@ -186,6 +191,20 @@ export default {
           this.getRecipes();
         });
     },
+    removeRecipe(recipeID) {
+      const path = `http://localhost:5000/api/recipes/${recipeID}`;
+      axios.delete(path)
+        .then(() => {
+          this.getRecipes();
+          this.message = 'Recipe deleted!';
+          this.showMessage = true;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.log(error);
+          this.getRecipes();
+        });
+    },
     updateRecipe(payload, recipeID) {
       const path = `http://localhost:5000/api/recipes/${recipeID}`;
       axios.put(path, payload)
@@ -213,6 +232,9 @@ export default {
       this.editRecipeForm.ingredients = '';
       this.editRecipeForm.instructions = '';
       this.editRecipeForm.minutes = '';
+    },
+    onDeleteRecipe(recipe) {
+      this.removeRecipe(recipe.id);
     },
     onReset(evt) {
       evt.preventDefault();
