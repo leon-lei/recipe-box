@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-10">
+      <div class="col-sm-4">
         <div class="card" v-for="recipe in recipes" v-bind:key="recipe.id">
           <div class="card-content">
             <p class="name">{{ recipe.name }} - {{ recipe.minutes }}</p>
@@ -25,46 +25,46 @@
              title="Add a new recipe"
              hide-footer>
       <b-form @submit="onSubmit" @reset="onReset" class="w-100">
-      <b-form-group id="form-name-group"
-                    label="Name:"
-                    label-for="form-name-input">
+        <b-form-group id="form-name-group"
+                      label="Name:"
+                      label-for="form-name-input">
           <b-form-input id="form-name-input"
                         type="text"
                         v-model="addRecipeForm.name"
                         required
                         placeholder="Simmered Kabocha">
           </b-form-input>
-      </b-form-group>
-      <b-form-group id="form-ingredients-group"
-                    label="Ingredients:"
-                    label-for="form-ingredients-input">
+        </b-form-group>
+        <b-form-group id="form-ingredients-group"
+                      label="Ingredients:"
+                      label-for="form-ingredients-input">
           <b-form-input id="form-ingredients-input"
                         type="text"
                         v-model="addRecipeForm.ingredients"
                         required
                         placeholder="dashi, kabocha, mirin, soy sauce, sugar">
           </b-form-input>
-      </b-form-group>
-      <b-form-group id="form-instructions-group"
-                    label="Instructions:"
-                    label-for="form-instructions-input">
+        </b-form-group>
+        <b-form-group id="form-instructions-group"
+                      label="Instructions:"
+                      label-for="form-instructions-input">
           <b-form-input id="form-instructions-input"
                         type="text"
                         v-model="addRecipeForm.instructions"
                         required
                         placeholder="Mix and cover 1 inch kabocha pieces. Simmer 25 minutes.">
           </b-form-input>
-      </b-form-group>
-      <b-form-group id="form-minutes-group"
-                    label="Minutes:"
-                    label-for="form-minutes-input">
+        </b-form-group>
+        <b-form-group id="form-minutes-group"
+                      label="Minutes:"
+                      label-for="form-minutes-input">
           <b-form-input id="form-minutes-input"
-                        type="int"
-                        v-model="addRecipeForm.minutes"
-                        required
-                        placeholder="35">
+                          type="int"
+                          v-model="addRecipeForm.minutes"
+                          required
+                          placeholder="35">
           </b-form-input>
-      </b-form-group>
+        </b-form-group>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
@@ -86,8 +86,6 @@ export default {
         instructions: '',
         minutes: '',
       },
-      message: '',
-      showMessage: false,
       editRecipeForm: {
         id: '',
         name: '',
@@ -95,6 +93,8 @@ export default {
         instructions: '',
         minutes: '',
       },
+      message: '',
+      showMessage: false,
     };
   },
   components: {
