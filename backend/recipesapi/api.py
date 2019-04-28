@@ -11,7 +11,7 @@ api = Blueprint('api', __name__)
 @api.route('/recipes/', methods=['GET', 'POST'])
 def recipes():
     if request.method == 'GET':
-        recipes = Recipe.query.order_by(Recipe.name.asc())
+        recipes = Recipe.query.order_by(Recipe.minutes.asc())
         return jsonify({'recipes': [r.to_dict() for r in recipes]})
     elif request.method == 'POST':
         data = request.get_json()
