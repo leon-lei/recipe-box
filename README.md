@@ -1,7 +1,12 @@
 Recipe Box
 ==========================
-Flask application to store cooking recipes
+Application to store cooking recipes
+- Backend: Flask
+- Frontend: Vue
 
+Current features
+---------------
+- CRUD operations for Recipes
 
 Future features
 ---------------
@@ -14,8 +19,7 @@ Future features
 Database setup (SQLite)
 ---------------
 ```bash
-# Within backend directory
-# Should create recipes.db
+# Run in backend, should create recipes.db
 $: python manage.py db init
 $: python manage.py db migrate
 $: python manage.py db upgrade
@@ -24,10 +28,14 @@ $: python manage.py db upgrade
 Start app
 ---------------
 ```bash
+# backend
 $: python appserver.py
+
+# frontend
+$: npm run dev
 ```
 
-Activate shell
+Activate database shell
 ---------------
 ```bash
 $: python manage.py shell
