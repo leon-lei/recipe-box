@@ -15,23 +15,26 @@
     <!-- Recipe cards -->
     <b-row>
       <b-col sm="3" v-for="recipe in recipes" v-bind:key="recipe.id">
-        <div class="card-content">
-          <h4 class="name">{{ recipe.name }} - {{ recipe.minutes }}</h4>
-          <p class="name">{{ recipe.instructions }}</p>
-        </div>
-        <b-button
-                variant="outline-info"
-                size="sm"
-                v-b-modal.recipe-update-modal
-                @click="editRecipe(recipe)">
-            Update
-        </b-button>
-        <b-button
-                variant="outline-danger"
-                size="sm"
-                @click="onDeleteRecipe(recipe)">
-            Delete
-        </b-button>
+        <b-card
+          v-bind:title="recipe.name"
+          tag="recipe"
+          style="max-width: 28rem; min-height: 14rem;"
+          class="m-2">
+          <b-card-text>{{ `${recipe.instructions.slice(0,250)}...` }}</b-card-text>
+          <b-button
+                  variant="outline-info"
+                  size="sm"
+                  v-b-modal.recipe-update-modal
+                  @click="editRecipe(recipe)">
+              Update
+          </b-button>
+          <b-button
+                  variant="outline-danger"
+                  size="sm"
+                  @click="onDeleteRecipe(recipe)">
+              Delete
+          </b-button>
+        </b-card>
       </b-col>
     </b-row>
     <!-- Add recipe modal -->
