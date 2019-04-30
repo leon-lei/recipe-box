@@ -1,39 +1,39 @@
 <template>
-  <div class="container">
+  <b-container fluid>
     <!-- Add new recipe -->
-    <div class="row">
-      <div class="col-sm-12">
+    <b-row class="text-center">
+      <b-col sm="12">
         <h1>Recipes</h1>
         <hr>
         <alert :message="message" v-if="showMessage"></alert>
-        <button type="button" class="btn btn-success btn-sm" v-b-modal.recipe-modal>
+        <b-button variant="primary" v-b-modal.recipe-modal>
           Add Recipe
-        </button>
+        </b-button>
         <br><br>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <!-- Recipe cards -->
-    <div class="row">
-      <div class="card col-sm-3" v-for="recipe in recipes" v-bind:key="recipe.id">
+    <b-row>
+      <b-col sm="3" v-for="recipe in recipes" v-bind:key="recipe.id">
         <div class="card-content">
           <h4 class="name">{{ recipe.name }} - {{ recipe.minutes }}</h4>
           <p class="name">{{ recipe.instructions }}</p>
         </div>
-        <button
-                type="button"
-                class="btn btn-warning btn-sm"
+        <b-button
+                variant="outline-info"
+                size="sm"
                 v-b-modal.recipe-update-modal
                 @click="editRecipe(recipe)">
             Update
-        </button>
-        <button
-                type="button"
-                class="btn btn-danger btn-sm"
+        </b-button>
+        <b-button
+                variant="outline-danger"
+                size="sm"
                 @click="onDeleteRecipe(recipe)">
             Delete
-        </button>
-      </div>
-    </div>
+        </b-button>
+      </b-col>
+    </b-row>
     <!-- Add recipe modal -->
     <b-modal ref="addRecipeModal"
              id="recipe-modal"
@@ -134,7 +134,7 @@
       <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-modal>
-  </div>
+  </b-container>
 </template>
 
 <script>
