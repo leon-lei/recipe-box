@@ -5,7 +5,7 @@
       <b-col sm="12">
         <h1>Recipes</h1>
         <hr>
-        <alert :message="message" v-if="showMessage"></alert>
+        <b-alert :message="message" :show="showMessage">{{ message }}</b-alert>
         <b-button variant="primary" v-b-modal.recipe-modal>
           Add Recipe
         </b-button>
@@ -18,7 +18,7 @@
         <b-card
           v-bind:title="recipe.name"
           tag="recipe"
-          style="max-width: 28rem; min-height: 14rem;"
+          style="width: 20rem; height: 14rem;"
           class="m-2">
           <b-card-text>{{ `${recipe.instructions.slice(0,250)}...` }}</b-card-text>
           <b-button
@@ -133,7 +133,7 @@
                         placeholder="Enter minutes">
           </b-form-input>
         </b-form-group>
-      <b-button type="submit" variant="primary">Update</b-button>
+      <b-button type="submit" variant="success">Update</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-modal>
