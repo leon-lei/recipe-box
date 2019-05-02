@@ -5,35 +5,47 @@
       <b-col sm="12">
         <h1>Recipes</h1>
         <hr>
-        <b-alert :message="message" :show="showMessage">{{ message }}</b-alert>
+        <b-alert v-bind:message="message" :show="showMessage">{{ message }}</b-alert>
         <b-button variant="primary" v-b-modal.recipe-modal>
           Add Recipe
         </b-button>
         <br><br>
       </b-col>
     </b-row>
-    <!-- Recipe cards -->
     <b-row>
       <b-col sm="3" v-for="recipe in recipes" v-bind:key="recipe.id">
         <b-card
-          v-bind:title="recipe.name"
-          tag="recipe"
-          style="width: 20rem; height: 14rem;"
+          style="width: 28rem; height: 30rem;"
           class="m-2">
-          <b-card-text>{{ `${recipe.instructions.slice(0,250)}...` }}</b-card-text>
-          <b-button
-                  variant="outline-info"
-                  size="sm"
-                  v-b-modal.recipe-update-modal
-                  @click="editRecipe(recipe)">
-              Update
-          </b-button>
-          <b-button
-                  variant="outline-danger"
-                  size="sm"
-                  @click="onDeleteRecipe(recipe)">
-              Delete
-          </b-button>
+          <b-tabs card>
+            <b-tab title="Recipe">
+              <b-card-title>{{ `${recipe.name}` }}
+                <b-button
+                        variant="outline-info"
+                        size="sm"
+                        v-b-modal.recipe-update-modal
+                        @click="editRecipe(recipe)">
+                    Update
+                </b-button>
+                <b-button
+                        variant="outline-danger"
+                        size="sm"
+                        @click="onDeleteRecipe(recipe)">
+                    Delete
+                </b-button>
+              </b-card-title>
+            </b-tab>
+            <b-tab title="Ingredients">
+              <b-card-text>
+                {{ `${recipe.ingredients}` }}
+              </b-card-text>
+            </b-tab>
+            <b-tab title="Instructions">
+              <b-card-text>
+                {{ `${recipe.instructions}` }}
+              </b-card-text>
+            </b-tab>
+          </b-tabs>
         </b-card>
       </b-col>
     </b-row>
@@ -241,7 +253,7 @@ export default {
     },
     onReset(evt) {
       evt.preventDefault();
-      this.$refs.addRecipeModal.hide();
+      // this.$refs.addRecipeModal.hide();
       this.initForm();
     },
     onResetUpdate(evt) {
