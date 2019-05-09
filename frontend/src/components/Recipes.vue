@@ -9,13 +9,14 @@
         <b-button variant="primary" v-b-modal.recipe-modal>
           Add Recipe
         </b-button>
+        <b-form-input v-model="search" placeholder="Search for recipe"></b-form-input>
         <br><br>
       </b-col>
     </b-row>
     <b-row>
-      <b-col sm="3" v-for="recipe in recipes" v-bind:key="recipe.id">
+      <b-col sm="3" v-for="recipe in filteredRecipes" v-bind:key="recipe.id">
         <b-card
-          style="width: 28rem; height: 30rem;"
+          style="height: 20rem;"
           class="m-2">
           <b-tabs card>
             <b-tab title="Recipe">
@@ -175,6 +176,7 @@ export default {
       },
       message: '',
       showMessage: false,
+      search: '',
     };
   },
   components: {
@@ -289,6 +291,14 @@ export default {
   },
   created() {
     this.getRecipes();
+  },
+  computed: {
+    filteredRecipes: function () {
+      // eslint-disable-next-line
+      return this.recipes.filter((recipe) => {
+        return recipe.name.match(this.search) || recipe.ingredients.match(this.search);
+      });
+    },
   },
 };
 </script>
