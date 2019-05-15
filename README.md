@@ -10,8 +10,9 @@ Current features
 
 Future features
 ---------------
-- Use Blueprints
-- Search recipes
+- Adjust field type for "ingredients"
+- Text editor to write "instructions"
+- Use Blueprints?
 - Sort recipes
     - Name
     - Cooking Time

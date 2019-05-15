@@ -9,6 +9,7 @@
         <b-button variant="primary" v-b-modal.recipe-modal>
           Add Recipe
         </b-button>
+        <br><br>
         <b-form-input v-model="search" placeholder="Search for recipe"></b-form-input>
         <br><br>
       </b-col>
@@ -296,7 +297,7 @@ export default {
     filteredRecipes: function () {
       // eslint-disable-next-line
       return this.recipes.filter((recipe) => {
-        return recipe.name.match(this.search) || recipe.ingredients.match(this.search);
+        return recipe.name.toLowerCase().match(this.search, 'i') || recipe.ingredients.toLowerCase().match(this.search, 'i');
       });
     },
   },
