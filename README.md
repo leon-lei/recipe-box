@@ -10,12 +10,13 @@ Current features
 
 Future features
 ---------------
-- Adjust field type for "ingredients"
 - Text editor to write "instructions"
 - Use Blueprints?
 - Sort recipes
     - Name
     - Cooking Time
+- Negative search filter
+- Image field 
 
 Database setup (SQLite)
 ---------------
