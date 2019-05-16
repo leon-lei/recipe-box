@@ -15,13 +15,14 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col sm="3" v-for="recipe in filteredRecipes" v-bind:key="recipe.id">
+      <b-col sm="4" v-for="recipe in filteredRecipes" v-bind:key="recipe.id">
         <b-card
           style="height: 20rem;"
           class="m-2">
           <b-tabs card>
             <b-tab title="Recipe">
-              <b-card-title>{{ `${recipe.name}` }}
+              <b-card-title>{{ `${recipe.name}` }}</b-card-title>
+              <b-card-text>Time: {{ `${recipe.minutes}` }} minutes</b-card-text>
                 <b-button
                         variant="outline-info"
                         size="sm"
@@ -35,11 +36,15 @@
                         @click="onDeleteRecipe(recipe)">
                     Delete
                 </b-button>
-              </b-card-title>
             </b-tab>
             <b-tab title="Ingredients">
               <b-card-text>
-                {{ `${recipe.ingredients}` }}
+                <ul id="example-1">
+                  <li v-for="ingredient in `${recipe.ingredients}`.split(',') ">
+                    {{ ingredient }}
+                  </li>
+                </ul>
+
               </b-card-text>
             </b-tab>
             <b-tab title="Instructions">
