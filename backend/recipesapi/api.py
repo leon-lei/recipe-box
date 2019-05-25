@@ -4,9 +4,21 @@ REST requests and responses
 """
 
 from flask import Blueprint, jsonify, request
-from .models import db, Recipe
+from .models import db, Recipe, Ingredient
 
 api = Blueprint('api', __name__)
+
+@api.route('/ingredients/', methods=['GET', 'POST'])
+def ingredients():
+    if request.method == 'GET':
+        ingredients = Ingredient.query.order_by(Ingredient.ingr_name.asc())
+        return jsonify({'ingredients': [i.to_dict() for i in ingredients]})
+    elif request.method == 'POST':
+        data = request.get_json()
+        ingredient = ingredient(ingr_name=data['ingr_name'])
+        db.session.add(ingredient)
+        db.session.commit()
+        return jsonify(ingredient.to_dict()), 201
 
 @api.route('/recipes/', methods=['GET', 'POST'])
 def recipes():
@@ -23,7 +35,6 @@ def recipes():
         db.session.add(recipe)
         db.session.commit()
         return jsonify(recipe.to_dict()), 201
-
 
 @api.route('/recipes/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def recipe(id):
