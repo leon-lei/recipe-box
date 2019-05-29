@@ -7,7 +7,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
 from recipesapi.application import create_app
-from recipesapi.models import db, Recipe
+from recipesapi.models import db, Ingredient, Recipe, RecipeIngredient
 
 app = create_app()
 
@@ -22,7 +22,9 @@ manager.add_command('db', MigrateCommand)
 def shell_ctx():
     return dict(app=app,
                 db=db,
-                Recipe=Recipe)
+                Ingredient=Ingredient,
+                Recipe=Recipe,
+                RecipeIngredient=RecipeIngredient)
 
 if __name__ == '__main__':
     manager.run()
