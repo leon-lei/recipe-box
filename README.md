@@ -21,7 +21,8 @@ Future features
 Database setup (SQLite)
 ---------------
 ```bash
-# Run in backend, should create recipes.db
+# Run in backend directory, should create recipes.db
+# If db already exists, remove migrations directory before commands
 $: python manage.py db init
 $: python manage.py db migrate
 $: python manage.py db upgrade
