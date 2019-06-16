@@ -11,11 +11,11 @@ api = Blueprint('api', __name__)
 @api.route('/ingredients/', methods=['GET', 'POST'])
 def ingredients():
     if request.method == 'GET':
-        ingredients = Ingredient.query.order_by(Ingredient.ingr_name.asc())
+        ingredients = Ingredient.query.order_by(Ingredient.name.asc())
         return jsonify({'ingredients': [i.to_dict() for i in ingredients]})
     elif request.method == 'POST':
         data = request.get_json()
-        ingredient = ingredient(ingr_name=data['ingr_name'])
+        ingredient = Ingredient(name=data['name'])
         db.session.add(ingredient)
         db.session.commit()
         return jsonify(ingredient.to_dict()), 201

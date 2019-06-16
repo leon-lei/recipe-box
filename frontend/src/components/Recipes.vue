@@ -9,6 +9,9 @@
         <b-button variant="primary" v-b-modal.recipe-modal>
           Add Recipe
         </b-button>
+        <b-button variant="primary" v-b-modal.ingredient-modal>
+          Add Ingredient
+        </b-button>
         <br><br>
         <b-form-input v-model="search" placeholder="Search for recipe"></b-form-input>
         <br><br>
@@ -56,12 +59,32 @@
         </b-card>
       </b-col>
     </b-row>
+    <!-- Add ingredient modal -->
+    <b-modal ref="addIngredientModal"
+             id="ingredient-modal"
+             title="Add a new ingredient"
+             hide-footer>
+      <b-form @submit="ingredientSubmit" @reset="ingredientReset" class="w-100">
+        <b-form-group id="form-name-group"
+                      label="Name:"
+                      label-for="form-name-input">
+          <b-form-input id="form-name-input"
+                        type="text"
+                        v-model="addIngredientForm.name"
+                        required
+                        placeholder="Egg">
+          </b-form-input>
+        </b-form-group>
+        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="reset" variant="danger">Reset</b-button>
+        </b-form>
+      </b-modal>
     <!-- Add recipe modal -->
     <b-modal ref="addRecipeModal"
              id="recipe-modal"
              title="Add a new recipe"
              hide-footer>
-      <b-form @submit="onSubmit" @reset="onReset" class="w-100">
+      <b-form @submit="recipeSubmit" @reset="recipeReset" class="w-100">
         <b-form-group id="form-name-group"
                       label="Name:"
                       label-for="form-name-input">
@@ -111,7 +134,7 @@
             id="recipe-update-modal"
             title="Update"
             hide-footer>
-      <b-form @submit="onSubmitUpdate" @reset="onResetUpdate" class="w-100">
+      <b-form @submit="recipeSubmitUpdate" @reset="recipeResetUpdate" class="w-100">
         <b-form-group id="form-name-edit-group"
                   label="Name:"
                   label-for="form-name-edit-input">
@@ -166,7 +189,11 @@ import Alert from './Alert';
 export default {
   data() {
     return {
+      ingredients: [],
       recipes: [],
+      addIngredientForm: {
+        name: '',
+      },
       addRecipeForm: {
         name: '',
         ingredients: '',
@@ -198,6 +225,31 @@ export default {
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
+        });
+    },
+    getIngredients() {
+      const path = 'http://localhost:5000/api/ingredients/';
+      axios.get(path)
+        .then((res) => {
+          this.ingredients = res.data.ingredients;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+    addIngredient(payload) {
+      const path = 'http://localhost:5000/api/ingredients/';
+      axios.post(path, payload)
+        .then(() => {
+          this.getIngredients();
+          this.message = 'Ingredient added!';
+          this.showMessage = true;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.log(error);
+          this.getIngredients();
         });
     },
     addRecipe(payload) {
@@ -242,10 +294,29 @@ export default {
           this.getRecipes();
         });
     },
+    created() {
+      this.getRecipes();
+    },
     editRecipe(recipe) {
       this.editRecipeForm = recipe;
     },
-    initForm() {
+    ingredientInitForm() {
+      this.addIngredientForm.name = '';
+    },
+    ingredientReset(evt) {
+      evt.preventDefault();
+      this.ingredientInitForm();
+    },
+    ingredientSubmit(evt) {
+      evt.preventDefault();
+      this.$refs.addIngredientModal.hide();
+      const payload = {
+        name: this.addIngredientForm.name,
+      };
+      this.addIngredient(payload);
+      this.ingredientInitForm();
+    },
+    recipeInitForm() {
       this.addRecipeForm.name = '';
       this.addRecipeForm.ingredients = '';
       this.addRecipeForm.instructions = '';
@@ -259,18 +330,17 @@ export default {
     onDeleteRecipe(recipe) {
       this.removeRecipe(recipe.id);
     },
-    onReset(evt) {
+    recipeReset(evt) {
       evt.preventDefault();
-      // this.$refs.addRecipeModal.hide();
-      this.initForm();
+      this.recipeInitForm();
     },
-    onResetUpdate(evt) {
+    recipeResetUpdate(evt) {
       evt.preventDefault();
       this.$refs.editRecipeModal.hide();
-      this.initForm();
+      this.recipeInitForm();
       this.getRecipes();
     },
-    onSubmit(evt) {
+    recipeSubmit(evt) {
       evt.preventDefault();
       this.$refs.addRecipeModal.hide();
       const payload = {
@@ -280,9 +350,9 @@ export default {
         minutes: this.addRecipeForm.minutes,
       };
       this.addRecipe(payload);
-      this.initForm();
+      this.recipeInitForm();
     },
-    onSubmitUpdate(evt) {
+    recipeSubmitUpdate(evt) {
       evt.preventDefault();
       this.$refs.editRecipeModal.hide();
       const payload = {
@@ -294,9 +364,6 @@ export default {
       };
       this.updateRecipe(payload, this.editRecipeForm.id);
     },
-  },
-  created() {
-    this.getRecipes();
   },
   computed: {
     filteredRecipes: function () {
