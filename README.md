@@ -10,12 +10,12 @@ Current features
 
 Future features
 ---------------
-- Text editor to write "instructions"
-- Use Blueprints?
+- WYSIWYG editor to write "instructions"
 - Sort recipes
     - Name
     - Cooking Time
 - Negative search filter
+    - No peanuts in recipe ingredients
 - Image field 
 
 Database setup (SQLite)
