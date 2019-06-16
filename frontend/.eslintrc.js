@@ -48,7 +48,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'linebreak-style': 0,
     'global-require': 0,
-    'eslint linebreak-style': ['error', 'windows']
-    /*eslint linebreak-style: ['error', 'unix']*/
+    // ' linebreak-style': ['error', 'windows']
+    'linebreak-style': ['error', 'unix']
     }
   }
