@@ -17,6 +17,12 @@ class RecipeIngredient(db.Model):
     quantity = db.Column(db.Float)
     measurement = db.Column(db.String(10))
 
+    def to_dict(self):
+        return dict(id=self.id,
+                    name=self.ingredient.name,
+                    quantity=self.quantity,
+                    measurement=self.measurement)
+
     def __repr__(self):
         return f'<RecipeIngredient {self.quantity} {self.measurement}(s) of {self.recipe.name}'
 
@@ -32,7 +38,7 @@ class Recipe(db.Model):
     def to_dict(self):
         return dict(id=self.id,
                     name=self.name,
-                    ingredients=self.ingredients,
+                    ingredients=[i.to_dict() for i in self.Ingredients],
                     instructions=self.instructions,
                     minutes=self.minutes)
 
