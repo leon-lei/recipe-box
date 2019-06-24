@@ -43,11 +43,10 @@
             <b-tab title="Ingredients">
               <b-card-text>
                 <ul id="example-1">
-                  <li v-for="ingredient in `${recipe.ingredients}`.split(',') ">
-                    {{ ingredient }}
+                  <li v-for="recipeIngredient in `${recipe.Ingredients}`">
+                    {{ recipeIngredient.name }}
                   </li>
                 </ul>
-
               </b-card-text>
             </b-tab>
             <b-tab title="Instructions">
@@ -95,16 +94,27 @@
                         placeholder="Simmered Kabocha">
           </b-form-input>
         </b-form-group>
+
+
         <b-form-group id="form-ingredients-group"
                       label="Ingredients:"
                       label-for="form-ingredients-input">
           <b-form-input id="form-ingredients-input"
-                        type="text"
-                        v-model="addRecipeForm.ingredients"
-                        required
+                        list="ingredients-list"
                         placeholder="dashi, kabocha, mirin, soy sauce, sugar">
           </b-form-input>
+          <datalist id="ingredients-list">
+            <option v-for="ingredient in allIngredients"
+                  v-bind:value="ingredient.name"
+                  v-bind:label="ingredient.name">
+            </option>
+          </datalist>
+          <!-- <b-form-datalist id="ingredients-list" :
+          options="allIngredients"
+          :key="ingredient.name"></b-form-datalist> -->
         </b-form-group>
+
+
         <b-form-group id="form-instructions-group"
                       label="Instructions:"
                       label-for="form-instructions-input">
@@ -189,6 +199,7 @@ import Alert from './Alert';
 export default {
   data() {
     return {
+      allIngredients: [],
       ingredients: [],
       recipes: [],
       addIngredientForm: {
@@ -231,7 +242,7 @@ export default {
       const path = 'http://localhost:5000/api/ingredients/';
       axios.get(path)
         .then((res) => {
-          this.ingredients = res.data.ingredients;
+          this.allIngredients = res.data.ingredients;
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -249,7 +260,6 @@ export default {
         .catch((error) => {
           // eslint-disable-next-line
           console.log(error);
-          this.getIngredients();
         });
     },
     addRecipe(payload) {
@@ -293,9 +303,6 @@ export default {
           console.error(error);
           this.getRecipes();
         });
-    },
-    created() {
-      this.getRecipes();
     },
     editRecipe(recipe) {
       this.editRecipeForm = recipe;
@@ -364,6 +371,10 @@ export default {
       };
       this.updateRecipe(payload, this.editRecipeForm.id);
     },
+  },
+  created() {
+      this.getRecipes();
+      this.getIngredients();
   },
   computed: {
     filteredRecipes: function () {
