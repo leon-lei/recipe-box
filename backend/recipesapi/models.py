@@ -24,7 +24,7 @@ class RecipeIngredient(db.Model):
                     measurement=self.measurement)
 
     def __repr__(self):
-        return f'<RecipeIngredient {self.quantity} {self.measurement}(s) of {self.recipe.name}'
+        return f'<RecipeIngredient {self.quantity} {self.measurement}(s) of {self.ingredient.name}'
 
 
 class Recipe(db.Model):
