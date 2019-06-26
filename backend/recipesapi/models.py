@@ -13,7 +13,7 @@ class RecipeIngredient(db.Model):
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'))
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
     ingredient = db.relationship('Ingredient', uselist=False)
-    recipe = db.relationship('Recipe', uselist=False)
+    recipe = db.relationship('Recipe', uselist=True)
     quantity = db.Column(db.Float)
     measurement = db.Column(db.String(10))
 
