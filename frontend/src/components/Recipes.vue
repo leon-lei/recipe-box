@@ -42,9 +42,9 @@
             </b-tab>
             <b-tab title="Ingredients">
               <b-card-text>
-                <ul id="example-1">
-                  <li v-for="recipeIngredient in `${recipe.Ingredients}`">
-                    {{ recipeIngredient.name }}
+                <ul id="ingredients-list">
+                  <li v-for="recipeIngredient in recipe.ingredients" v-bind:recipeIngredient=recipeIngredient  v-bind:key="recipeIngredient.id">
+                    {{ recipeIngredient.quantity }}  {{ recipeIngredient.measurement }}s  {{ recipeIngredient.name }}
                   </li>
                 </ul>
               </b-card-text>
@@ -373,14 +373,15 @@ export default {
     },
   },
   created() {
-      this.getRecipes();
-      this.getIngredients();
+    this.getRecipes();
+    this.getIngredients();
   },
   computed: {
     filteredRecipes: function () {
       // eslint-disable-next-line
       return this.recipes.filter((recipe) => {
-        return recipe.name.toLowerCase().match(this.search, 'i') || recipe.ingredients.toLowerCase().match(this.search, 'i');
+        // return recipe.name.toLowerCase().match(this.search, 'i') || recipe.ingredients.toLowerCase().match(this.search, 'i');
+        return recipe.name.toLowerCase().match(this.search.toLowerCase(), 'i');
       });
     },
   },
