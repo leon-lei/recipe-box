@@ -15,10 +15,14 @@ def ingredients():
         return jsonify({'ingredients': [i.to_dict() for i in ingredients]})
     elif request.method == 'POST':
         data = request.get_json()
-        ingredient = Ingredient(name=data['name'])
-        db.session.add(ingredient)
-        db.session.commit()
-        return jsonify(ingredient.to_dict()), 201
+        # Add ingredient if it doesn't exist in ingredients table
+        if Ingredient.query.filter_by(name=data['name'].lower()).scalar() is None:
+            ingredient = Ingredient(name=data['name'].lower())
+            db.session.add(ingredient)
+            db.session.commit()
+            return jsonify(ingredient.to_dict()), 201
+        else:
+            return jsonify({}), 204
 
 @api.route('/recipes/', methods=['GET', 'POST'])
 def recipes():
