@@ -4,7 +4,7 @@ REST requests and responses
 """
 
 from flask import Blueprint, jsonify, request
-from .models import db, Recipe, Ingredient
+from .models import db, Ingredient, Recipe, RecipeIngredient
 
 api = Blueprint('api', __name__)
 
@@ -27,8 +27,14 @@ def recipes():
         return jsonify({'recipes': [r.to_dict() for r in recipes]})
     elif request.method == 'POST':
         data = request.get_json()
+        # Use when data['ingredients'] is a list of ingredient names
+        # ingreds = [Ingredient.query.filter_by(name=i).one() for i in data['ingredients']]
+        ingreds = [Ingredient.query.filter_by(name=data['ingredients']).one()]
+        recipe_ingreds = [RecipeIngredient(ingredient=i, quantity=1, measurement='tb') for i in ingreds]
+        db.session.add_all(recipe_ingreds)
+        db.session.flush()
         recipe = Recipe(name=data['name'],
-                        ingredients=data['ingredients'],
+                        Ingredients=recipe_ingreds,
                         instructions=data['instructions'],
                         minutes=data['minutes'],
                         )

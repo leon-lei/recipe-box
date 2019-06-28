@@ -43,7 +43,9 @@
             <b-tab title="Ingredients">
               <b-card-text>
                 <ul id="ingredients-list">
-                  <li v-for="recipeIngredient in recipe.ingredients" v-bind:recipeIngredient=recipeIngredient  v-bind:key="recipeIngredient.id">
+                  <li v-for="recipeIngredient in recipe.ingredients"
+                  v-bind:recipeIngredient=recipeIngredient
+                  v-bind:key="recipeIngredient.id">
                     {{ recipeIngredient.quantity }}  {{ recipeIngredient.measurement }}s  {{ recipeIngredient.name }}
                   </li>
                 </ul>
@@ -94,27 +96,19 @@
                         placeholder="Simmered Kabocha">
           </b-form-input>
         </b-form-group>
-
-
         <b-form-group id="form-ingredients-group"
                       label="Ingredients:"
                       label-for="form-ingredients-input">
           <b-form-input id="form-ingredients-input"
-                        list="ingredients-list"
+                        list="all-ingredients"
+                        v-model="addRecipeForm.ingredients"
+                        required
                         placeholder="dashi, kabocha, mirin, soy sauce, sugar">
           </b-form-input>
-          <datalist id="ingredients-list">
-            <option v-for="ingredient in allIngredients"
-                  v-bind:value="ingredient.name"
-                  v-bind:label="ingredient.name">
-            </option>
-          </datalist>
-          <!-- <b-form-datalist id="ingredients-list" :
-          options="allIngredients"
-          :key="ingredient.name"></b-form-datalist> -->
+          <b-form-datalist id="all-ingredients" :options="ingredient in allIngredients">
+            <option v-for="ingredient in allIngredients">{{ingredient.name}}</option>
+          </b-form-datalist>
         </b-form-group>
-
-
         <b-form-group id="form-instructions-group"
                       label="Instructions:"
                       label-for="form-instructions-input">
@@ -200,21 +194,20 @@ export default {
   data() {
     return {
       allIngredients: [],
-      ingredients: [],
       recipes: [],
       addIngredientForm: {
         name: '',
       },
       addRecipeForm: {
         name: '',
-        ingredients: '',
+        ingredients: [],
         instructions: '',
         minutes: '',
       },
       editRecipeForm: {
         id: '',
         name: '',
-        ingredients: '',
+        ingredients: [],
         instructions: '',
         minutes: '',
       },
@@ -325,12 +318,12 @@ export default {
     },
     recipeInitForm() {
       this.addRecipeForm.name = '';
-      this.addRecipeForm.ingredients = '';
+      this.addRecipeForm.ingredients = [];
       this.addRecipeForm.instructions = '';
       this.addRecipeForm.minutes = '';
       this.editRecipeForm.id = '';
       this.editRecipeForm.name = '';
-      this.editRecipeForm.ingredients = '';
+      this.editRecipeForm.ingredients = [];
       this.editRecipeForm.instructions = '';
       this.editRecipeForm.minutes = '';
     },
